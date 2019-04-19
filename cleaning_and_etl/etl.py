@@ -34,8 +34,8 @@ def restaurant_feature_generation_from_orders(orders, restaurants):
     """
     generate features at the restaurant level
     :param orders: pandas dataframe of the orders dataset
-    :param restaurants: 
-    :return:
+    :param restaurants: pandas dataframe with the restaurants dataset
+    :return: pandas datafarme consisting of the restaurants with new features
     """
 
     # some medians at the restaurant level
@@ -58,6 +58,11 @@ def restaurant_feature_generation_from_orders(orders, restaurants):
 
 
 def filter_orders_data(orders):
+    """
+    removes some outliers in the orders data
+    :param orders: pandas dataframe of orders data
+    :return: pandas dataframe of filtered orders data
+    """
 
     # orders with more than 25 items (confer number_of_items_hist.html)
     orders_filtered = orders.loc[orders['number_of_items'] <= 25]
@@ -73,6 +78,12 @@ def filter_orders_data(orders):
     return orders_filtered
 
 def merge_and_filter_on_location_and_food_type(orders, restaurants):
+    """
+    merges the orders and restaurants datasets, and removes outliers for the model
+    :param orders: pandas dataframe of orders
+    :param restaurants: pandas dataframe of restaurants
+    :return: pandas dataframe of orders and restaurants after filtering
+    """
 
     order_and_rest = orders.merge(right=restaurants, how='inner', on='restaurant_id')
     assert order_and_rest.shape[0] == orders.shape[0]
@@ -93,6 +104,10 @@ def merge_and_filter_on_location_and_food_type(orders, restaurants):
 
 
 def etl_main():
+    """
+    runs the etl pipeline
+    :return: None (writes final dataset to csv)
+    """
     orders = pd.read_csv('raw_data/orders.csv')
     restaurants = pd.read_csv('raw_data/restaurants.csv')
 
