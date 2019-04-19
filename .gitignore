@@ -1,0 +1,13 @@
+.idea/deliveroo.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.venv/
+deliveroo_code_and_plots.tar.gz
+deliveroo_with_tf2.tar.gz
+plots_/
+processed_data/
+raw_data/
+plots
+plots/*
+
