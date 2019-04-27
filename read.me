@@ -1,0 +1,50 @@
+To run this code you first need to create the following directories in the root of the project:
+
+plots
+raw_data
+processed_data
+
+----------
+
+The raw_data directory should contain the orders and restaurants dataset
+
+Filename : **orders.csv**
+
+| Column Name       | Type    | Description                   |
+|-------------------|---------|-------------------------------|
+| order_value       | Float   | Value of the order in local currency|
+| order_created_at  | String (timestamp) | Timestamp (UTC) indicating when the customer places the order |
+| restaurant_id     | Integer | Unique restaurant identifier |
+| number_of_items   | Integer | Number of items in the order |
+| order_acknowledged_at | String (timestamp) | Timestamp (UTC) indicating when the order is acknowledged by the restaurant. |
+| order_ready_at    | String (timestamp) | Timestamp (UTC) indicating when the food is ready |
+
+Filename : **restaurants.csv**
+
+| Column Name       | Type    | Description                   |
+|-------------------|---------|-------------------------------|
+| restaurant_id     | Integer | Unique restaurant identifier  |
+| country           | String  | Country where the restaurant is |
+| city              | String  | City where the restaurant is |
+| timezone_name     | String  | Name of the timezone         |
+| type_of_food      | String  | Type of food prepared by the restaurant |
+
+
+------------
+
+Running the code:
+
+Code was tested to run in python 3.5.  Packages required can be pip installed from the requirements.txt file. There are three main scripts in three appropriate folders that can be run in order.
+
+exploration/explore_raw_data.py
+cleaning_and_etl/etl.py
+model/fit_and_predict.py
+
+Scripts should be run from project root directory as opposed to script directory - that is:
+
+ $ python exploration/explore_raw_data.py
+ $ python cleaning_and_etl/etl.py
+ $ python model/fit_and_predict_with_tf2.py
+
+
+

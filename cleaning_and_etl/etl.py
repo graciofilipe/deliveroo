@@ -57,7 +57,7 @@ def restaurant_feature_generation_from_orders(orders, restaurants):
     return restaurants_enriched
 
 
-def filter_orders_data(orders):
+def filter_orders_data(orders, max_items=25, max_value=200, min_minutes=0.1, max_minutes=90):
     """
     removes some outliers in the orders data
     :param orders: pandas dataframe of orders data
@@ -65,13 +65,13 @@ def filter_orders_data(orders):
     """
 
     # orders with more than 25 items (confer number_of_items_hist.html)
-    orders_filtered = orders.loc[orders['number_of_items'] <= 25]
+    orders_filtered = orders.loc[orders['number_of_items'] <= max_items]
 
     # orders that total more than 200 in local currency (GBP/EUR) (confer order_value_hist.html)
-    orders_filtered = orders_filtered.loc[orders_filtered['order_value'] <= 200]
+    orders_filtered = orders_filtered.loc[orders_filtered['order_value'] <= max_value]
 
-    orders_filtered = orders_filtered.loc[orders_filtered['minutes_from_acknowledged_to_ready'] > 0.1]
-    orders_filtered = orders_filtered.loc[orders_filtered['minutes_from_acknowledged_to_ready'] < 90]
+    orders_filtered = orders_filtered.loc[orders_filtered['minutes_from_acknowledged_to_ready'] > min_minutes]
+    orders_filtered = orders_filtered.loc[orders_filtered['minutes_from_acknowledged_to_ready'] < max_minutes]
 
     print('size of orders after removals', orders_filtered.shape[0])
 
@@ -120,7 +120,9 @@ def etl_main():
 
     orders_enriched = order_feature_generation(orders)
 
-    orders_enriched_filtered = filter_orders_data(orders_enriched)
+    orders_enriched_filtered = filter_orders_data(orders_enriched,
+                                                  max_items=25, max_value=200,
+                                                  min_minutes=0.1, max_minutes=90)
 
     restaurants_enriched = restaurant_feature_generation_from_orders(orders_enriched_filtered,
                                                                      restaurants)
