@@ -7,13 +7,13 @@ from tensorflow.keras import layers
 from sklearn.model_selection import train_test_split
 
 
-def data_preparation():
+def data_preparation(data_path):
     """
     loads the data and turns it into tensorflow datasets
     :return: (data, train_ds, val_ds, test_ds) (pandas_df, tf.Dataset, tf.Dataset, tf.Dataset)
             The original dataset and train, validation and test tensorflow datasets
     """
-    data = pd.read_csv('./processed_data/order_and_restaurant_filtered_and_enriched.csv')
+    data = pd.read_csv(data_path)
     data.drop(labels='Unnamed: 0', axis='columns', inplace=True)
 
     train, test = train_test_split(data, test_size=0.2)
@@ -163,8 +163,8 @@ def modeling_pipeline():
     runs the full modeling pipeline
     :return: None
     """
-
-    data_df, train_ds, val_ds, test_ds = data_preparation()
+    data_path = './processed_data/order_and_restaurant_filtered_and_enriched.csv'
+    data_df, train_ds, val_ds, test_ds = data_preparation(data_path)
     feature_layer = prepare_feature_layer(data_df)
     model = model_building(feature_layer)
     model_fit_and_evaluate(model=model,
